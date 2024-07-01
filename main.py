@@ -1,6 +1,6 @@
 from auth import register, login, users
 from user_data import save_users, load_users
-from todo import add_task, view_tasks, todo_lists
+from todo import add_task, view_tasks, complete_task, delete_task, todo_lists
 
 def main():
     global users, todo_lists
@@ -27,7 +27,9 @@ def main():
                     print(f"\nWelcome, {username}")
                     print("1. Add task")
                     print("2. View tasks")
-                    print("3. Logout")
+                    print("3. Mark task as complete")
+                    print("4. Delete task")
+                    print("5. Logout")
                     user_choice = input("Enter your choice: ")
                     
                     if user_choice == "1":
@@ -36,6 +38,12 @@ def main():
                     elif user_choice == "2":
                         view_tasks(username)
                     elif user_choice == "3":
+                        task_number = int(input("Enter task number to mark as complete: "))
+                        complete_task(username, task_number)
+                    elif user_choice == "4":
+                        task_number = int(input("Enter task number to delete: "))
+                        delete_task(username, task_number)
+                    elif user_choice == "5":
                         print("Logging out.")
                         break
                     else:
