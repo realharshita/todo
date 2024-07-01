@@ -30,12 +30,18 @@ def main():
                     print("2. View tasks")
                     print("3. Mark task as complete")
                     print("4. Delete task")
-                    print("5. Logout")
+                    print("5. Sort tasks by priority")
+                    print("6. Sort tasks by deadline")
+                    print("7. Filter tasks by completed")
+                    print("8. Filter tasks by pending")
+                    print("9. Logout")
                     user_choice = input("Enter your choice: ")
                     
                     if user_choice == "1":
                         task = input("Enter task: ")
-                        add_task(username, task)
+                        priority = input("Enter priority (Low, Medium, High): ")
+                        deadline = input("Enter deadline (YYYY-MM-DD or No deadline): ")
+                        add_task(username, task, priority, deadline)
                         save_todo_lists(todo_lists)
                     elif user_choice == "2":
                         view_tasks(username)
@@ -54,6 +60,14 @@ def main():
                         except ValueError:
                             print("Invalid input. Please enter a number.")
                     elif user_choice == "5":
+                        view_tasks(username, sort_by="priority")
+                    elif user_choice == "6":
+                        view_tasks(username, sort_by="deadline")
+                    elif user_choice == "7":
+                        view_tasks(username, filter_by="completed")
+                    elif user_choice == "8":
+                        view_tasks(username, filter_by="pending")
+                    elif user_choice == "9":
                         print("Logging out.")
                         break
                     else:
