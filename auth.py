@@ -6,6 +6,9 @@ def hash_password(password):
     return hashlib.sha256(password.encode()).hexdigest()
 
 def register(username, password):
+    if not username or not password:
+        print("Username and password cannot be empty.")
+        return False
     if username in users:
         print("Username already exists.")
         return False
@@ -14,6 +17,9 @@ def register(username, password):
     return True
 
 def login(username, password):
+    if not username or not password:
+        print("Username and password cannot be empty.")
+        return False
     if username not in users:
         print("Username not found.")
         return False

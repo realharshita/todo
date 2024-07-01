@@ -1,10 +1,11 @@
 from auth import register, login, users
-from user_data import save_users, load_users
+from user_data import save_users, load_users, save_todo_lists, load_todo_lists
 from todo import add_task, view_tasks, complete_task, delete_task, todo_lists
 
 def main():
     global users, todo_lists
     users = load_users()
+    todo_lists = load_todo_lists()
 
     print("Welcome to the To-Do List Application")
     
@@ -35,20 +36,31 @@ def main():
                     if user_choice == "1":
                         task = input("Enter task: ")
                         add_task(username, task)
+                        save_todo_lists(todo_lists)
                     elif user_choice == "2":
                         view_tasks(username)
                     elif user_choice == "3":
-                        task_number = int(input("Enter task number to mark as complete: "))
-                        complete_task(username, task_number)
+                        try:
+                            task_number = int(input("Enter task number to mark as complete: "))
+                            complete_task(username, task_number)
+                            save_todo_lists(todo_lists)
+                        except ValueError:
+                            print("Invalid input. Please enter a number.")
                     elif user_choice == "4":
-                        task_number = int(input("Enter task number to delete: "))
-                        delete_task(username, task_number)
+                        try:
+                            task_number = int(input("Enter task number to delete: "))
+                            delete_task(username, task_number)
+                            save_todo_lists(todo_lists)
+                        except ValueError:
+                            print("Invalid input. Please enter a number.")
                     elif user_choice == "5":
                         print("Logging out.")
                         break
                     else:
                         print("Invalid choice. Please try again.")
         elif choice == "3":
+            save_users(users)
+            save_todo_lists(todo_lists)
             print("Exiting the application.")
             break
         else:

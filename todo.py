@@ -1,6 +1,9 @@
 todo_lists = {}
 
 def add_task(username, task):
+    if not task:
+        print("Task cannot be empty.")
+        return
     if username not in todo_lists:
         todo_lists[username] = []
     todo_lists[username].append({"task": task, "completed": False})
@@ -15,15 +18,15 @@ def view_tasks(username):
         print(f"{idx}. {task['task']} - {status}")
 
 def complete_task(username, task_number):
-    if username in todo_lists and 0 < task_number <= len(todo_lists[username]):
-        todo_lists[username][task_number - 1]["completed"] = True
-        print("Task marked as completed.")
-    else:
+    if not username in todo_lists or not 0 < task_number <= len(todo_lists[username]):
         print("Invalid task number.")
+        return
+    todo_lists[username][task_number - 1]["completed"] = True
+    print("Task marked as completed.")
 
 def delete_task(username, task_number):
-    if username in todo_lists and 0 < task_number <= len(todo_lists[username]):
-        todo_lists[username].pop(task_number - 1)
-        print("Task deleted.")
-    else:
+    if not username in todo_lists or not 0 < task_number <= len(todo_lists[username]):
         print("Invalid task number.")
+        return
+    todo_lists[username].pop(task_number - 1)
+    print("Task deleted.")
