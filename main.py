@@ -1,6 +1,6 @@
 from auth import register, login, users
 from user_data import save_users, load_users, save_todo_lists, load_todo_lists
-from todo import add_task, view_tasks, complete_task, delete_task, todo_lists
+from todo import add_task, view_tasks, complete_task, delete_task, edit_task, todo_lists
 
 def main():
     global users, todo_lists
@@ -30,11 +30,12 @@ def main():
                     print("2. View tasks")
                     print("3. Mark task as complete")
                     print("4. Delete task")
-                    print("5. Sort tasks by priority")
-                    print("6. Sort tasks by deadline")
-                    print("7. Filter tasks by completed")
-                    print("8. Filter tasks by pending")
-                    print("9. Logout")
+                    print("5. Edit task")
+                    print("6. Sort tasks by priority")
+                    print("7. Sort tasks by deadline")
+                    print("8. Filter tasks by completed")
+                    print("9. Filter tasks by pending")
+                    print("10. Logout")
                     user_choice = input("Enter your choice: ")
                     
                     if user_choice == "1":
@@ -60,14 +61,24 @@ def main():
                         except ValueError:
                             print("Invalid input. Please enter a number.")
                     elif user_choice == "5":
-                        view_tasks(username, sort_by="priority")
+                        try:
+                            task_number = int(input("Enter task number to edit: "))
+                            new_task = input("Enter new task description: ")
+                            new_priority = input("Enter new priority (Low, Medium, High): ")
+                            new_deadline = input("Enter new deadline (YYYY-MM-DD or No deadline): ")
+                            edit_task(username, task_number, new_task, new_priority, new_deadline)
+                            save_todo_lists(todo_lists)
+                        except ValueError:
+                            print("Invalid input. Please enter a number.")
                     elif user_choice == "6":
-                        view_tasks(username, sort_by="deadline")
+                        view_tasks(username, sort_by="priority")
                     elif user_choice == "7":
-                        view_tasks(username, filter_by="completed")
+                        view_tasks(username, sort_by="deadline")
                     elif user_choice == "8":
-                        view_tasks(username, filter_by="pending")
+                        view_tasks(username, filter_by="completed")
                     elif user_choice == "9":
+                        view_tasks(username, filter_by="pending")
+                    elif user_choice == "10":
                         print("Logging out.")
                         break
                     else:

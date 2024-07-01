@@ -1,4 +1,4 @@
-from datetime import datetime
+todo_lists = {}
 
 def add_task(username, task, priority="Medium", deadline="No deadline"):
     if not task:
@@ -43,3 +43,13 @@ def delete_task(username, task_number):
         return
     todo_lists[username].pop(task_number - 1)
     print("Task deleted.")
+
+def edit_task(username, task_number, new_task, new_priority, new_deadline):
+    if not username in todo_lists or not 0 < task_number <= len(todo_lists[username]):
+        print("Invalid task number.")
+        return
+    task = todo_lists[username][task_number - 1]
+    task["task"] = new_task
+    task["priority"] = new_priority
+    task["deadline"] = new_deadline
+    print("Task updated.")
